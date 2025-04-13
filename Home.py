@@ -27,7 +27,7 @@ if page == "Home":
 # Redirect to Upload Page
 elif page == "📤 Upload":
     st.write("Redirecting to upload page...")
-    st.experimental_rerun()
+    st.rerun()
 
 # Redirect to My Videos Page (Can be implemented later)
 elif page == "📺 My Videos":
