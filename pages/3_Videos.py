@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
+from streamlit_autorefresh import st_autorefresh
 
 API_BASE_URL = "http://localhost:8080"  # Replace if your backend is hosted elsewhere
 
@@ -14,6 +15,9 @@ def fetch_uploaded_videos(token):
             return False, response.text
     except Exception as e:
         return False, str(e)
+
+# ⏱ Auto-refresh every 30 seconds (30000 milliseconds)
+st_autorefresh(interval=30 * 1000, key="video_status_polling")
 
 # Page setup
 st.title("📊 Uploaded Video Status")
@@ -31,7 +35,6 @@ else:
         st.info("📭 No videos uploaded yet.")
     else:
         df = pd.DataFrame(data)
-        # Rename columns if needed for clarity
         df = df.rename(columns={
             "VideoID": "Video ID",
             "ClientID": "Client ID",
@@ -42,5 +45,4 @@ else:
             "Strategy": "Strategy",
             "url": "Video URL"
         })
-
         st.dataframe(df, use_container_width=True)
